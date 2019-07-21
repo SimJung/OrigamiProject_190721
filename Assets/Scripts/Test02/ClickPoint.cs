@@ -52,35 +52,57 @@ public class ClickPoint : MonoBehaviour
         Debug.Log("end Dest");
 
         //여기서 접기 실행
-        float a = (to.y - from.y) / (to.x - from.x);
-        float b = from.y - a * from.x;
-
-        float xm = (-0.5f - b) / a;
-        float xp = (0.5f - b) / a;
-        float ym = a / -2 + b;
-        float yp = a / 2 + b;
-
-        Vector2 p1 = new Vector2(xm, -0.5f);
-        Vector2 p2 = new Vector2(xp, 0.5f);
-        Vector2 p3 = new Vector2(-0.5f, ym);
-        Vector2 p4 = new Vector2(0.5f, yp);
-
-        Vector2 f2 = Vector2.zero;
-        Vector2 t2 = Vector2.zero;
-
-        Debug.Log(p1 + " " + p2 + " " + p3 + " " + p4);
-        if (a > 0)
+        if(to.x == from.x)
         {
-            f2 = (xm > -0.5) ? p1 : p3;
-            t2 = (xp < 0.5) ? p2 : p4;
-        }
-        else
+            
+        }else
         {
-            f2 = (xp > -0.5) ? p2 : p3;
-            t2 = (xm < 0.5) ? p1 : p4;
+            float a = (to.y - from.y) / (to.x - from.x);
+            float b = from.y - a * from.x;
+
+            float m_val = 0.52f;
+
+            float xm = (-m_val - b) / a;
+            float xp = (m_val - b) / a;
+            float ym = a * -m_val + b;
+            float yp = a * m_val + b;
+
+            Vector2 p1 = new Vector2(xm, -m_val);
+            Vector2 p2 = new Vector2(xp, m_val);
+            Vector2 p3 = new Vector2(-m_val, ym);
+            Vector2 p4 = new Vector2(m_val, yp);
+
+            Vector2 f2 = Vector2.zero;
+            Vector2 t2 = Vector2.zero;
+
+            Debug.Log(p1 + " " + p2 + " " + p3 + " " + p4);
+            if (a > 0)
+            {
+                f2 = (xm > -m_val) ? p1 : p3;
+                t2 = (xp < m_val) ? p2 : p4;
+            }
+            else
+            {
+                f2 = (ym < m_val) ? p3 : p2;
+                t2 = (yp > -m_val) ? p4 : p1;
+            }
+
+            from.x = f2.x; from.y = f2.y;
+            to.x = t2.x; to.y = t2.y;
+
         }
-        from.x = f2.x;  from.y = f2.y;
-        to.x = t2.x;    to.y = t2.y;
+
+        float bound = 0.03f;
+
+        // 좌표 자석 효과
+        if (Mathf.Abs(from.x) < bound)
+            from.x = 0;
+        if (Mathf.Abs(from.y) < bound)
+            from.y = 0;
+        if (Mathf.Abs(to.x) < bound)
+            to.x = 0;
+        if (Mathf.Abs(to.y) < bound)
+            to.y = 0;
 
         Debug.Log("from : " + from + "to : " + to);
         
@@ -95,6 +117,7 @@ public class ClickPoint : MonoBehaviour
     {
         if (fromChk)
         {
+            Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 Pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
@@ -105,6 +128,7 @@ public class ClickPoint : MonoBehaviour
         }
         if (toChk)
         {
+            Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 Pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
@@ -115,6 +139,7 @@ public class ClickPoint : MonoBehaviour
         }
         if (destChk)
         {
+            Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 Pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);

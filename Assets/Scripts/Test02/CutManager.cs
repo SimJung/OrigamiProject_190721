@@ -69,7 +69,7 @@ public class CutManager : MonoBehaviour
         {
             frameObjs.Clear();
         }
-        Vector3 mid = (from + to) / 2;
+        Vector3 mid = new Vector3(from.x + to.x, from.y + to.y, from.z + to.z) / 2;
         Material mat = steps[now][0].GetComponent<MeshRenderer>().material;
         
         for (int i=0; i<steps[now].Count; i++)
@@ -130,7 +130,7 @@ public class CutManager : MonoBehaviour
             
             Debug.Log("foldCase : " + foldCase);
             Debug.Log("from : (" + from.x + ", " + from.y + ", " + from.z + " to : (" + to.x + ", " + to.y + ", " + to.z + ")");
-            Debug.Log("mid : "+mid+" toto : " +toto);
+            Debug.Log("mid : ("+mid.x + ","+mid.y+","+mid.z+")"+" toto : " +toto);
             bool isCut = false;
             Vector3 startv = from;
             startv.z = startv.z - 5;
@@ -157,7 +157,7 @@ public class CutManager : MonoBehaviour
             }
             */
             steps[now][i].transform.position -= new Vector3(0, 0, 0.001f);
-            for (int j=0; j<=30; j++)
+            for (int j = 0; j <= 30; j++)
             {
                 startv.x += (to.x - from.x) / 30;
                 startv.y += (to.y - from.y) / 30;
@@ -172,6 +172,7 @@ public class CutManager : MonoBehaviour
                         break;
                     }
                 }
+                
             }
             Debug.Log(isCut);
             steps[now][i].transform.position += new Vector3(0, 0, 0.001f);
@@ -184,6 +185,7 @@ public class CutManager : MonoBehaviour
                 temp[0].transform.position += (temp[0].transform.rotation * temp[0].GetComponent<RectTransform>().pivot);
                 temp[0].transform.rotation *= Quaternion.AngleAxis(angle, to - from);
                 temp[0].transform.position -= (temp[0].transform.rotation * temp[0].GetComponent<RectTransform>().pivot);
+
 
 
                 if (temp[0].transform.name != "emptyCut")
@@ -239,7 +241,7 @@ public class CutManager : MonoBehaviour
         }
         return false;
     }
-
+    
     /*
     public static void dragAction(Vector3 nowMouse)
     {
