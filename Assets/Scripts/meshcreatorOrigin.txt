@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MeshCreator : MonoBehaviour
+{
+    // Start is called before the first frame update
+    void Start()
+    {
+        createPolygon();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    void createPolygon()
+    {
+        Vector3[] front_vertices = new Vector3[] {
+            new Vector3(-1, 1, -0.0005f), new Vector3(1, 1, -0.0005f),
+            new Vector3(-1, -1, -0.0005f), new Vector3(1, -1, -0.0005f)
+        };
+        int[] front_triangles = new int[] {0,1,2,0,2,3};
+        Mesh front_mesh = new Mesh();
+
+        front_mesh.vertices = front_vertices;
+        front_mesh.triangles = front_triangles;
+
+        GetComponent<MeshFilter>().mesh = front_mesh;
+    }
+}

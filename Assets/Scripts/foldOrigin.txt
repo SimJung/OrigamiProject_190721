@@ -1,0 +1,63 @@
+Vector3 from3 = new Vector3(from.x, 0, from.y);
+        Vector3 to3 = new Vector3(to.x, 0, to.y);
+        Vector3 mid = (from3 + to3)/2;
+        Vector3 toto = mid;
+        if (from3.x == to3.x)
+            toto.x = 1;
+        if (from3.z == to3.z)
+            toto.z = 1;
+
+        if(from3.x != to3.x && from3.z != to3.z)
+        {
+            float a = (to.y - from.y) / (to.x - from.x);
+            float b = to.y - a * to.x;
+
+            float m = -1 / a;
+
+            float yy = (from.x * (from.x - 2) + from.y * from.y - to.x * (to.x - 2) - to.y * to.y) / (2 * (from.y - to.y));
+            float n = yy + m;
+
+            toto.x = 1;
+            toto.z = yy;
+        }
+        int cntt = objArray.Count, delnum = 0;
+        List<int> delList = new List<int>();
+        Debug.Log(cntt);
+        Quaternion qAngle = Quaternion.Euler(new Vector3(0, angle, 0));
+        for (int i = 0; i < cntt; i++)
+        {
+            if (lineTouchChk(from3, to3, objArray[i].transform.GetChild(0).gameObject)) 
+            {
+                Debug.Log(i + "번 째 포문은 성공");
+                Debug.Log(qAngle);
+                GameObject[] temp = MeshCut.Cut(objArray[i].transform.GetChild(0).gameObject, mid, toto, qAngle);
+                temp[1].transform.name = "plane" + planeNum;
+                planeNum++;
+
+                temp[0].transform.name = "plane" + planeNum;
+                planeNum++;
+                delList.Add(i);
+                
+                objs.Add(temp[1]);
+                objs.Add(temp[0]);
+
+                objArray[i].gameObject.SetActive(false);
+                objs[i * 2].gameObject.SetActive(false);
+                objs[i * 2 + 1].gameObject.SetActive(false);
+            }
+        }
+        for(int i=0; i<delList.Count; i++)
+        {
+            objArray.RemoveAt(delList[i]-delnum);
+            delnum++;
+            Debug.Log(i + "번째 gameobject objArray에서 삭제");
+        }
+        
+        int objcnt = objs.Count;
+        Debug.Log("objs count " + objs.Count);
+        for (int i=0; i<objs.Count; i++)
+        {
+            objs[i].SetActive(true);
+            objArray.Add(objs[i]);
+        }
+        objs.Clear();
