@@ -117,7 +117,7 @@ public class ClickPoint : MonoBehaviour
     {
         if (fromChk)
         {
-            Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
+            //Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 Pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
@@ -128,7 +128,7 @@ public class ClickPoint : MonoBehaviour
         }
         if (toChk)
         {
-            Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
+            //Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 Pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
@@ -139,7 +139,7 @@ public class ClickPoint : MonoBehaviour
         }
         if (destChk)
         {
-            Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
+            //Debug.Log("X : " + (Input.mousePosition.x - Screen.width / 2f) / 172f + " Y : " + (Input.mousePosition.y - Screen.height / 2f) / 172f);
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 Pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);

@@ -156,6 +156,7 @@ public class CutManager : MonoBehaviour
                 }
             }
             */
+            Debug.Log("It has to hit with " + steps[now][i].name);
             steps[now][i].transform.position -= new Vector3(0, 0, 0.001f);
             for (int j = 0; j <= 30; j++)
             {
@@ -182,9 +183,13 @@ public class CutManager : MonoBehaviour
                 GameObject[] temp = MeshCut.Cut(steps[now][i], mid, toto, mat, foldCase, line, to-from, angle);
                 temp[0].GetComponent<RectTransform>().pivot = mid;
                 temp[1].GetComponent<RectTransform>().pivot = mid;
-                temp[0].transform.position += (temp[0].transform.rotation * temp[0].GetComponent<RectTransform>().pivot);
-                temp[0].transform.rotation *= Quaternion.AngleAxis(angle, to - from);
-                temp[0].transform.position -= (temp[0].transform.rotation * temp[0].GetComponent<RectTransform>().pivot);
+
+                if(temp[0].transform.rotation == Quaternion.identity)
+                {
+                    temp[0].transform.position += (temp[0].transform.rotation * temp[0].GetComponent<RectTransform>().pivot);
+                    temp[0].transform.rotation *= Quaternion.AngleAxis(angle, to - from);
+                    temp[0].transform.position -= (temp[0].transform.rotation * temp[0].GetComponent<RectTransform>().pivot);
+                }
 
 
 
